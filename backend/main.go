@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"log"
+	"net"
 	"net/http"
 	"os"
 
@@ -11,10 +12,10 @@ import (
 )
 
 func main() {
-	// Get port from environment or use default
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "4071"
+	// Get socket path from environment
+	socketPath := os.Getenv("SOCKET_PATH")
+	if socketPath == "" {
+		log.Fatal("SOCKET_PATH environment variable not set")
 	}
 
 	// Setup router
@@ -34,8 +35,21 @@ func main() {
 		handlers.AllowedHeaders([]string{"Content-Type", "Authorization"}),
 	)
 
-	log.Printf("🎲 Dice app starting on :%s", port)
-	log.Fatal(http.ListenAndServe(":"+port, corsHandler(r)))
+	// Remove existing socket if it exists
+	os.Remove(socketPath)
+
+	// Listen on Unix socket
+	listener, err := net.Listen("unix", socketPath)
+	if err != nil {
+		log.Fatalf("Failed to listen on socket %s: %v", socketPath, err)
+	}
+	defer listener.Close()
+
+	// Set socket permissions so activity-hub can connect
+	os.Chmod(socketPath, 0777)
+
+	log.Printf("🎲 Dice app listening on socket: %s", socketPath)
+	log.Fatal(http.Serve(listener, corsHandler(r)))
 }
 
 func handleConfig(w http.ResponseWriter, r *http.Request) {

@@ -12,7 +12,7 @@
   "requiredRoles": [],
   "displayOrder": 50,
   "backend": {
-    "port": 4071,
+    "launch": "unix-socket",
     "healthCheck": "/api/health"
   }
 }

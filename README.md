@@ -52,8 +52,8 @@ npm start
 
 ```bash
 cd backend
-go run main.go
-# Runs on http://localhost:4071
+SOCKET_PATH=/tmp/dice.sock go run main.go
+# Listens on Unix socket /tmp/dice.sock
 ```
 
 ## Building for Activity Hub
@@ -77,11 +77,18 @@ cd backend
 go build -o dice-app .
 ```
 
-### Run
+### Run with Unix Socket (Activity Hub)
 ```bash
 cd backend
-PORT=4071 ./dice-app
+SOCKET_PATH=/tmp/dice.sock ./dice-app
 ```
+
+The activity-hub launcher will:
+1. Create a Unix socket at the specified path
+2. Pass SOCKET_PATH environment variable to the app
+3. Launch the app and connect via the socket
+4. Route HTTP requests to the app through the socket
+5. Handle app lifecycle and monitoring
 
 ## Integration with Activity Hub
 
@@ -119,11 +126,17 @@ This app uses the **activity-hub-sdk** for:
 - Desktop: Full-size 120x120px dice
 - Mobile: 100x100px dice with adjusted spacing
 
-## Port Mapping
+## Architecture
 
-- **Frontend Dev**: 3000
-- **Backend**: 4071
-- **Activity Hub Shell**: 3001
+### Development (Local)
+- **Frontend Dev**: http://localhost:3000
+- **Backend Socket**: `/tmp/dice.sock`
+- **Activity Hub Shell**: http://localhost:3001
+
+### Production (Activity Hub)
+- **Frontend**: Bundled in backend/static/
+- **Backend**: Launched via Unix socket by activity-hub launcher
+- **Communication**: HTTP-over-Unix-socket through activity-hub proxy
 
 ## Testing
 
@@ -133,19 +146,30 @@ cd frontend
 npm test
 ```
 
-### Integration Test
-1. Start activity-hub shell on port 3001
-2. Start dice backend on port 4071
+### Integration Test with Activity Hub
+1. Start activity-hub shell (port 3001)
+2. App is launched by activity-hub via Unix socket
 3. Navigate to dice app from shell
 4. Test rolling dice and total calculation
+5. Monitor health check at `/api/health`
 
-## Socket.io Launching
+## Unix Socket Launching
 
 This is the first app tested with Activity Hub's Unix socket launching mechanism:
 
-- Activity Hub launcher initiates connection via Unix socket
-- App detects environment and connects to parent
-- Health check endpoint: `/api/health`
+**How it works:**
+1. Activity Hub launcher creates a Unix socket at path `SOCKET_PATH`
+2. Launcher passes `SOCKET_PATH` env var to the app process
+3. App listens on the socket using `net.Listen("unix", socketPath)`
+4. Activity Hub connects to the socket and proxies HTTP requests
+5. App responds through the socket connection
+6. Launcher monitors `/api/health` for app lifecycle
+
+**Benefits:**
+- No port conflicts
+- More secure (local filesystem permissions)
+- Better isolation between apps
+- Activity Hub full control over app lifecycle
 
 ## Contributing
 
