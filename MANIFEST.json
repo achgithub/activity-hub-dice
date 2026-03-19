@@ -1,0 +1,18 @@
+{
+  "id": "dice",
+  "name": "Rrroll the Dice",
+  "icon": "🎲",
+  "category": "utility",
+  "description": "Roll up to 6 dice with smooth animations",
+  "type": "iframe",
+  "realtime": "none",
+  "minPlayers": 0,
+  "maxPlayers": 0,
+  "guestAccessible": true,
+  "requiredRoles": [],
+  "displayOrder": 50,
+  "backend": {
+    "port": 4071,
+    "healthCheck": "/api/health"
+  }
+}
