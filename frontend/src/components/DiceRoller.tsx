@@ -1,27 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useActivityHubContext } from 'activity-hub-sdk';
+import '../styles/dice-board.css';
 
 interface DiceRollerProps {
   maxDice?: number;
 }
 
-interface User {
-  email: string;
-  name: string;
-}
-
 const DiceRoller: React.FC<DiceRollerProps> = ({ maxDice = 6 }) => {
-  const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    // Get user from query params (passed by activity-hub)
-    const params = new URLSearchParams(window.location.search);
-    const email = params.get('userId') || params.get('email');
-    const name = params.get('userName') || params.get('name');
-
-    if (email && name) {
-      setUser({ email, name });
-    }
-  }, []);
+  const { user, navigateTo } = useActivityHubContext();
   const [numDice, setNumDice] = useState(1);
   const [diceValues, setDiceValues] = useState<number[]>([1]);
   const [isRolling, setIsRolling] = useState(false);
@@ -88,7 +74,7 @@ const DiceRoller: React.FC<DiceRollerProps> = ({ maxDice = 6 }) => {
         <div className="ah-app-header-right">
           <button
             className="ah-lobby-btn"
-            onClick={() => window.location.href = `http://${window.location.hostname}:3001`}
+            onClick={() => navigateTo('/lobby')}
           >
             ← Lobby
           </button>
