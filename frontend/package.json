@@ -2,7 +2,7 @@
   "name": "activity-hub-dice",
   "version": "1.0.0",
   "private": true,
-  "homepage": "/",
+  "homepage": "/api/apps/dice/proxy",
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -15,7 +15,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "PUBLIC_URL=/api/apps/dice/proxy react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
