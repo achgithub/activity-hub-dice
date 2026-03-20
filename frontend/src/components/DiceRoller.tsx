@@ -7,7 +7,7 @@ interface DiceRollerProps {
 }
 
 const DiceRoller: React.FC<DiceRollerProps> = ({ maxDice = 6 }) => {
-  const { user, navigateTo } = useActivityHubContext();
+  const { user } = useActivityHubContext();
   const [numDice, setNumDice] = useState(1);
   const [diceValues, setDiceValues] = useState<number[]>([1]);
   const [isRolling, setIsRolling] = useState(false);
