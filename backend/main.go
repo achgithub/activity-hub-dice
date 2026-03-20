@@ -18,6 +18,13 @@ func main() {
 		log.Fatal("SOCKET_PATH environment variable not set")
 	}
 
+	// Get static path from environment (set by Activity Hub launcher)
+	staticPath := os.Getenv("STATIC_PATH")
+	if staticPath == "" {
+		// Fallback to ./static for local development
+		staticPath = "./static"
+	}
+
 	// Setup router
 	r := mux.NewRouter()
 
@@ -26,7 +33,7 @@ func main() {
 	r.HandleFunc("/api/health", handleHealth).Methods("GET")
 
 	// Serve static files (built frontend)
-	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./static")))
+	r.PathPrefix("/").Handler(http.FileServer(http.Dir(staticPath)))
 
 	// CORS middleware
 	corsHandler := handlers.CORS(
@@ -49,6 +56,7 @@ func main() {
 	os.Chmod(socketPath, 0777)
 
 	log.Printf("🎲 Dice app listening on socket: %s", socketPath)
+	log.Printf("📁 Serving static files from: %s", staticPath)
 	log.Fatal(http.Serve(listener, corsHandler(r)))
 }
 

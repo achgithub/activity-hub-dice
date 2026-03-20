@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './styles/activity-hub.css';
+import './styles/dice-board.css';
 import App from './App';
 
 const root = ReactDOM.createRoot(
