@@ -74,7 +74,7 @@ const DiceRoller: React.FC<DiceRollerProps> = ({ maxDice = 6 }) => {
         <div className="ah-app-header-right">
           <button
             className="ah-lobby-btn"
-            onClick={() => navigateTo('/lobby')}
+            onClick={() => window.location.href = `http://${window.location.hostname}:3001`}
           >
             ← Lobby
           </button>
