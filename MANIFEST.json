@@ -11,6 +11,8 @@
   "guestAccessible": true,
   "requiredRoles": [],
   "displayOrder": 50,
+  "binaryPath": "../activity-hub-dice/backend/dice-app",
+  "staticPath": "../activity-hub-dice/frontend/build",
   "backend": {
     "launch": "unix-socket",
     "healthCheck": "/api/health"
