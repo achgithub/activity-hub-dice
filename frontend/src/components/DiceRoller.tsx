@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, CSSProperties } from 'react';
 import { useActivityHubContext } from 'activity-hub-sdk';
-import '../styles/dice-board.css';
 
 interface DiceRollerProps {
   maxDice?: number;
@@ -61,11 +60,38 @@ const DiceRoller: React.FC<DiceRollerProps> = ({ maxDice = 6 }) => {
   };
 
   const total = diceValues.reduce((sum, val) => sum + val, 0);
-
   const diceEmojis = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
 
+  // Minimal inline styles for just the dice board animations
+  const diceStyles: CSSProperties = {
+    width: '80px',
+    height: '80px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: '4px',
+    backgroundColor: '#f5f5f5',
+    border: '1px solid #e0e0e0',
+    fontSize: '32px',
+    fontWeight: 'bold',
+    transition: 'all 0.3s ease',
+  };
+
+  const rollingDiceStyles: CSSProperties = {
+    ...diceStyles,
+    transform: `rotate(${Math.random() * 360}deg)`,
+    animation: 'spin 0.1s linear',
+  };
+
   return (
-    <div className="dice-roller-container">
+    <div style={{ minHeight: '100vh', backgroundColor: '#fafafa', display: 'flex', flexDirection: 'column' }}>
+      <style>{`
+        @keyframes spin {
+          from { transform: rotateX(0) rotateY(0); }
+          to { transform: rotateX(360deg) rotateY(360deg); }
+        }
+      `}</style>
+
       {/* Header */}
       <div className="ah-app-header">
         <div className="ah-app-header-left">
@@ -73,7 +99,7 @@ const DiceRoller: React.FC<DiceRollerProps> = ({ maxDice = 6 }) => {
         </div>
         <div className="ah-app-header-right">
           <button
-            className="ah-lobby-btn"
+            className="ah-btn-outline ah-btn-sm"
             onClick={() => window.location.href = `http://${window.location.hostname}:3001`}
           >
             ← Lobby
@@ -81,70 +107,77 @@ const DiceRoller: React.FC<DiceRollerProps> = ({ maxDice = 6 }) => {
         </div>
       </div>
 
-      <div className="ah-container ah-container--narrow">
+      <div className="ah-container ah-container--narrow" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         {/* Dice Count Controls */}
-        <div className="dice-controls">
+        <div className="ah-flex-center" style={{ gap: '1rem', marginBottom: '2rem' }}>
           <button
             className="ah-btn-outline ah-btn-sm"
             onClick={removeDie}
             disabled={numDice <= 1 || isRolling}
-            title="Remove a die"
           >
-            ▼
+            ▼ Remove
           </button>
-          <span className="dice-count">{numDice} die{numDice !== 1 ? 's' : ''}</span>
+          <span style={{ fontSize: '1.25rem', fontWeight: '500', minWidth: '80px', textAlign: 'center' }}>
+            {numDice} die{numDice !== 1 ? 's' : ''}
+          </span>
           <button
             className="ah-btn-outline ah-btn-sm"
             onClick={addDie}
             disabled={numDice >= maxDice || isRolling}
-            title="Add a die"
           >
-            ▲
+            Add ▲
           </button>
         </div>
 
         {/* Dice Display */}
-        <div className="dice-container">
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))',
+          gap: '1rem',
+          marginBottom: '2rem',
+          justifyItems: 'center',
+        }}>
           {diceValues.map((value, index) => (
-            <div
-              key={index}
-              className={`dice ${isRolling ? 'rolling' : 'settled'}`}
-            >
-              {/* Try to load PNG image, fallback to emoji */}
+            <div key={index} style={isRolling ? rollingDiceStyles : diceStyles}>
               <img
-                src={`/dice/dice-${value}.png`}
+                src={`dice/dice-${value}.png`}
                 alt={`dice showing ${value}`}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '4px' }}
                 onError={(e) => {
                   const img = e.target as HTMLImageElement;
                   img.style.display = 'none';
-                  img.nextElementSibling?.classList.remove('hidden');
                 }}
               />
-              <div className={`dice-fallback ${!isRolling ? 'hidden' : ''}`}>
-                {diceEmojis[value - 1]}
-              </div>
+              {/* Fallback emoji - show when image fails or during rolling */}
+              {isRolling && (
+                <span style={{ fontSize: '2rem' }}>
+                  {diceEmojis[value - 1]}
+                </span>
+              )}
             </div>
           ))}
         </div>
 
         {/* Roll Button */}
         <button
-          className={`dice-roll-button ${isRolling ? 'ah-btn-outline' : 'ah-btn-primary'}`}
+          className={isRolling ? 'ah-btn-outline' : 'ah-btn-primary'}
           onClick={rollDice}
           disabled={isRolling}
+          style={{ alignSelf: 'center', marginBottom: '2rem', minWidth: '150px', fontSize: '1.1rem', padding: '0.75rem 2rem' }}
         >
-          {isRolling ? 'Rolling...' : 'Roll'}
+          {isRolling ? 'Rolling...' : 'Roll Dice'}
         </button>
 
         {/* Total Display */}
         {!isRolling && numDice > 0 && (
-          <div className="dice-total">Total: {total}</div>
-        )}
-
-        {/* User Info - Debug */}
-        {user && (
-          <div style={{ marginTop: '2rem', fontSize: '0.875rem', color: '#999' }}>
-            <p>Logged in as: {user.name || user.email}</p>
+          <div style={{
+            textAlign: 'center',
+            fontSize: '1.5rem',
+            fontWeight: '600',
+            color: '#2196F3',
+            marginBottom: '2rem',
+          }}>
+            Total: {total}
           </div>
         )}
       </div>
