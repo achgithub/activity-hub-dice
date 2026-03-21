@@ -39,17 +39,11 @@
 /* Max width based on number of dice - controls columns */
 .dice-container--1,
 .dice-container--2,
-.dice-container--3 {
-  max-width: 408px; /* 3 * 120px + 2 * 24px gap = max 3 wide */
-}
-
-.dice-container--4 {
-  max-width: 264px; /* 2 * 120px + 1 * 24px gap = 2x2 grid */
-}
-
+.dice-container--3,
+.dice-container--4,
 .dice-container--5,
 .dice-container--6 {
-  max-width: 408px; /* 3 * 120px + 2 * 24px gap = max 3 wide */
+  max-width: 408px; /* 3 * 120px + 2 * 24px gap = max 3 wide on desktop */
 }
 
 /* Button spacing */
