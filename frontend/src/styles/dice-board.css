@@ -24,7 +24,9 @@
 
 /* Dice container - white background like a board */
 .dice-container {
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1.5rem;
   margin-bottom: 2rem;
   min-height: 150px;
@@ -32,33 +34,22 @@
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  justify-items: center;
-  justify-content: center;
 }
 
-/* Layout based on number of dice */
-.dice-container--1 {
-  grid-template-columns: repeat(1, 120px);
-}
-
-.dice-container--2 {
-  grid-template-columns: repeat(2, 120px);
-}
-
+/* Max width based on number of dice - controls columns */
+.dice-container--1,
+.dice-container--2,
 .dice-container--3 {
-  grid-template-columns: repeat(3, 120px);
+  max-width: 408px; /* 3 * 120px + 2 * 24px gap = max 3 wide */
 }
 
 .dice-container--4 {
-  grid-template-columns: repeat(2, 120px);
+  max-width: 264px; /* 2 * 120px + 1 * 24px gap = 2x2 grid */
 }
 
-.dice-container--5 {
-  grid-template-columns: repeat(3, 120px);
-}
-
+.dice-container--5,
 .dice-container--6 {
-  grid-template-columns: repeat(3, 120px);
+  max-width: 408px; /* 3 * 120px + 2 * 24px gap = max 3 wide */
 }
 
 /* Button spacing */
@@ -145,15 +136,12 @@
   }
 
   /* Override to max 2 columns on narrow screens */
-  .dice-container--1 {
-    grid-template-columns: repeat(1, 100px);
-  }
-
+  .dice-container--1,
   .dice-container--2,
   .dice-container--3,
   .dice-container--4,
   .dice-container--5,
   .dice-container--6 {
-    grid-template-columns: repeat(2, 100px);
+    max-width: 224px; /* 2 * 100px + 1 * 24px gap = max 2 wide */
   }
 }
