@@ -43,7 +43,7 @@
 .dice-container--4,
 .dice-container--5,
 .dice-container--6 {
-  max-width: 408px; /* 3 * 120px + 2 * 24px gap = max 3 wide on desktop */
+  max-width: 480px; /* 3 * 120px + 2 * 24px gap + 2 * 32px padding = max 3 wide on desktop */
 }
 
 /* Button spacing */
@@ -136,6 +136,6 @@
   .dice-container--4,
   .dice-container--5,
   .dice-container--6 {
-    max-width: 224px; /* 2 * 100px + 1 * 24px gap = max 2 wide */
+    max-width: 288px; /* 2 * 100px + 1 * 24px gap + 2 * 32px padding = max 2 wide */
   }
 }
