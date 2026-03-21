@@ -30,9 +30,12 @@
 }
 
 .dice-roller-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   min-height: 100vh;
-  background-color: #fafafa;
-  padding: 1rem 0;
+  padding: 2rem 1rem;
 }
 
 .dice-controls {

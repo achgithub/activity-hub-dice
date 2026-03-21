@@ -51,87 +51,68 @@ const DiceRoller: React.FC<DiceRollerProps> = ({ maxDice = 6 }) => {
   const total = diceValues.reduce((a, b) => a + b, 0);
 
   return (
-    <>
-      {/* App Header Bar */}
-      <div className="ah-app-header">
-        <div className="ah-app-header-left">
-          <h1 className="ah-app-title">🎲 Rrroll the Dice</h1>
-        </div>
-        <div className="ah-app-header-right">
+    <div className="dice-roller-container">
+      {/* Number of dice controls */}
+      <div className="dice-controls">
+        <div className="dice-control-buttons">
           <button
-            className="ah-lobby-btn"
-            onClick={() => {
-              window.location.href = `http://${window.location.hostname}:3001`;
-            }}
+            className="ah-btn-outline"
+            onClick={removeDie}
+            disabled={numDice <= 1 || isRolling}
           >
-            ← Lobby
+            ▼
+          </button>
+          <span className="dice-count">
+            {numDice} {numDice === 1 ? 'die' : 'dice'}
+          </span>
+          <button
+            className="ah-btn-outline"
+            onClick={addDie}
+            disabled={numDice >= maxDice || isRolling}
+          >
+            ▲
           </button>
         </div>
       </div>
 
-      <div className="ah-container ah-container--narrow dice-roller-container">
-        {/* Number of dice controls */}
-        <div className="dice-controls">
-          <div className="dice-control-buttons">
-            <button
-              className="ah-btn-outline"
-              onClick={removeDie}
-              disabled={numDice <= 1 || isRolling}
-            >
-              ▼
-            </button>
-            <span className="dice-count">
-              {numDice} {numDice === 1 ? 'die' : 'dice'}
-            </span>
-            <button
-              className="ah-btn-outline"
-              onClick={addDie}
-              disabled={numDice >= maxDice || isRolling}
-            >
-              ▲
-            </button>
+      {/* Dice display */}
+      <div className="dice-container">
+        {diceValues.map((value, index) => (
+          <div key={index} className={`dice ${isRolling ? 'rolling' : ''}`}>
+            <img
+              src={`dice/dice-${value}.png`}
+              alt={`Dice showing ${value}`}
+              onError={(e) => {
+                // Fallback to emoji if image doesn't load
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+                if (target.nextSibling) return;
+                const fallback = document.createElement('div');
+                fallback.className = 'dice-fallback';
+                fallback.textContent = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'][value - 1];
+                target.parentElement?.appendChild(fallback);
+              }}
+            />
           </div>
-        </div>
-
-        {/* Dice display */}
-        <div className="dice-container">
-          {diceValues.map((value, index) => (
-            <div key={index} className={`dice ${isRolling ? 'rolling' : ''}`}>
-              <img
-                src={`dice/dice-${value}.png`}
-                alt={`Dice showing ${value}`}
-                onError={(e) => {
-                  // Fallback to emoji if image doesn't load
-                  const target = e.target as HTMLImageElement;
-                  target.style.display = 'none';
-                  if (target.nextSibling) return;
-                  const fallback = document.createElement('div');
-                  fallback.className = 'dice-fallback';
-                  fallback.textContent = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'][value - 1];
-                  target.parentElement?.appendChild(fallback);
-                }}
-              />
-            </div>
-          ))}
-        </div>
-
-        {/* Roll button */}
-        <button
-          className="ah-btn-primary dice-roll-button"
-          onClick={rollDice}
-          disabled={isRolling}
-        >
-          {isRolling ? 'Rolling...' : '🎲 Roll!'}
-        </button>
-
-        {/* Total */}
-        {!isRolling && (
-          <div className="dice-total">
-            Total: {total}
-          </div>
-        )}
+        ))}
       </div>
-    </>
+
+      {/* Roll button */}
+      <button
+        className="ah-btn-primary dice-roll-button"
+        onClick={rollDice}
+        disabled={isRolling}
+      >
+        {isRolling ? 'Rolling...' : '🎲 Roll!'}
+      </button>
+
+      {/* Total */}
+      {!isRolling && (
+        <div className="dice-total">
+          Total: {total}
+        </div>
+      )}
+    </div>
   );
 };
 
