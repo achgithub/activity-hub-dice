@@ -74,7 +74,7 @@ const DiceRoller: React.FC<DiceRollerProps> = ({ maxDice = 6 }) => {
       </div>
 
       {/* Dice display */}
-      <div className="ah-flex-center dice-container">
+      <div className={`dice-container dice-container--${numDice}`}>
         {diceValues.map((value, index) => (
           <div key={index} className={`dice ${isRolling ? 'rolling' : ''}`}>
             <img
