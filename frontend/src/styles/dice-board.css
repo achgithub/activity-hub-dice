@@ -1,12 +1,12 @@
 /* Dice Board - Layout and animations */
 
-/* Full-height container with centered content */
+/* Full-width container with centered content */
 .dice-roller-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  width: 100%;
   padding: 2rem 1rem;
 }
 
