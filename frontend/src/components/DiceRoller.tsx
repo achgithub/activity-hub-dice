@@ -53,30 +53,28 @@ const DiceRoller: React.FC<DiceRollerProps> = ({ maxDice = 6 }) => {
   return (
     <div className="dice-roller-container">
       {/* Number of dice controls */}
-      <div className="dice-controls">
-        <div className="dice-control-buttons">
-          <button
-            className="ah-btn-outline"
-            onClick={removeDie}
-            disabled={numDice <= 1 || isRolling}
-          >
-            ▼
-          </button>
-          <span className="dice-count">
-            {numDice} {numDice === 1 ? 'die' : 'dice'}
-          </span>
-          <button
-            className="ah-btn-outline"
-            onClick={addDie}
-            disabled={numDice >= maxDice || isRolling}
-          >
-            ▲
-          </button>
-        </div>
+      <div className="ah-flex-center dice-controls">
+        <button
+          className="ah-btn-outline"
+          onClick={removeDie}
+          disabled={numDice <= 1 || isRolling}
+        >
+          ▼
+        </button>
+        <span className="dice-count">
+          {numDice} {numDice === 1 ? 'die' : 'dice'}
+        </span>
+        <button
+          className="ah-btn-outline"
+          onClick={addDie}
+          disabled={numDice >= maxDice || isRolling}
+        >
+          ▲
+        </button>
       </div>
 
       {/* Dice display */}
-      <div className="dice-container">
+      <div className="ah-flex-center dice-container">
         {diceValues.map((value, index) => (
           <div key={index} className={`dice ${isRolling ? 'rolling' : ''}`}>
             <img
