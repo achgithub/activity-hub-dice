@@ -106,9 +106,7 @@ const DiceRoller: React.FC<DiceRollerProps> = ({ maxDice = 6 }) => {
 
       {/* Total */}
       {!isRolling && (
-        <div className="dice-total">
-          Total: {total}
-        </div>
+        <h3>Total: {total}</h3>
       )}
     </div>
   );

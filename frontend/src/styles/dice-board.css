@@ -22,27 +22,24 @@
   text-align: center;
 }
 
-/* Dice container - no max-width! */
+/* Dice container - white background like a board */
 .dice-container {
   gap: 1.5rem;
   flex-wrap: wrap;
   margin-bottom: 2rem;
   min-height: 150px;
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
-/* Button and total spacing */
+/* Button spacing */
 .dice-roll-button {
   margin-bottom: 2rem;
   min-width: 200px;
   padding: 1rem 3rem;
   font-size: 1.2rem;
-}
-
-.dice-total {
-  text-align: center;
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-top: 2rem;
 }
 
 @keyframes shake-rotate {
