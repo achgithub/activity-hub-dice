@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { AppHeader, GameCard } from 'activity-hub-sdk';
 
 interface DiceRollerProps {
   maxDice?: number;
@@ -51,9 +52,12 @@ const DiceRoller: React.FC<DiceRollerProps> = ({ maxDice = 6 }) => {
   const total = diceValues.reduce((a, b) => a + b, 0);
 
   return (
-    <div className="dice-roller-container">
-      {/* Number of dice controls */}
-      <div className="ah-flex-center dice-controls">
+    <>
+      <AppHeader title="Rrroll the Dice" icon="🎲" />
+
+      <GameCard size="narrow">
+        {/* Number of dice controls */}
+        <div className="ah-flex-center dice-controls">
         <button
           className="ah-btn-outline"
           onClick={removeDie}
@@ -104,11 +108,12 @@ const DiceRoller: React.FC<DiceRollerProps> = ({ maxDice = 6 }) => {
         {isRolling ? 'Rolling...' : '🎲 Roll!'}
       </button>
 
-      {/* Total */}
-      {!isRolling && (
-        <h3>Total: {total}</h3>
-      )}
-    </div>
+        {/* Total */}
+        {!isRolling && (
+          <h3>Total: {total}</h3>
+        )}
+      </GameCard>
+    </>
   );
 };
 

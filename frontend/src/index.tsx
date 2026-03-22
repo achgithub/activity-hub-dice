@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './styles/activity-hub.css';
+// NOTE: Shared Activity Hub CSS is auto-loaded by activity-hub-sdk
 import './styles/dice-board.css';
 import App from './App';
 
