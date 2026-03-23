@@ -1,27 +1,5 @@
 /* Dice Board - Layout and animations */
 
-/* Container - flex centered, no width constraint */
-.dice-roller-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem 1rem;
-}
-
-/* Controls spacing */
-.dice-controls {
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.dice-count {
-  font-size: 1.125rem;
-  font-weight: 500;
-  min-width: 120px;
-  text-align: center;
-}
-
 /* Dice container - white background like a board */
 .dice-container {
   display: flex;
@@ -44,14 +22,6 @@
 .dice-container--5,
 .dice-container--6 {
   max-width: 480px; /* 3 * 120px + 2 * 24px gap + 2 * 32px padding = max 3 wide on desktop */
-}
-
-/* Button spacing */
-.dice-roll-button {
-  margin-bottom: 2rem;
-  min-width: 200px;
-  padding: 1rem 3rem;
-  font-size: 1.2rem;
 }
 
 @keyframes shake-rotate {
