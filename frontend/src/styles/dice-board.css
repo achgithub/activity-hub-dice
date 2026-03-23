@@ -6,13 +6,13 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 1.5rem;
-  margin-bottom: 2rem;
+  margin: 0 auto 2rem;
   background: white;
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  /* Fixed width - 3 dice columns on desktop */
-  width: 480px; /* 3 * 120px + 2 * 24px gap + 2 * 32px padding */
+  /* Max width - 3 dice columns on desktop, but fits within container */
+  max-width: 480px; /* 3 * 120px + 2 * 24px gap + 2 * 32px padding */
   min-height: 184px; /* 1 row: 120px dice + 2 * 32px padding */
 }
 
@@ -91,9 +91,9 @@
     font-size: 60px;
   }
 
-  /* Fixed width for mobile - 2 dice columns */
+  /* Max width for mobile - 2 dice columns */
   .dice-container {
-    width: 288px; /* 2 * 100px + 1 * 24px gap + 2 * 32px padding */
+    max-width: 288px; /* 2 * 100px + 1 * 24px gap + 2 * 32px padding */
     min-height: 164px; /* 1 row: 100px dice + 2 * 32px padding */
   }
 }

@@ -54,7 +54,7 @@ const DiceRoller: React.FC<DiceRollerProps> = ({ maxDice = 6 }) => {
   return (
     <GameCard size="narrow">
         {/* Number of dice controls */}
-        <div className="ah-flex-center ah-mb">
+        <div className="ah-flex-center-justify ah-mb">
         <button
           className="ah-btn-outline"
           onClick={removeDie}
