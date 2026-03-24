@@ -14,16 +14,18 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-content: flex-start;
   gap: 1.5rem;
   margin: 0 auto 2rem;
   background: white;
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  /* Fixed height to prevent resizing - accommodates 2 rows of 3 dice */
-  min-height: 400px;
-  /* Max width - 3 dice columns on desktop, but fits within container */
-  max-width: 480px; /* 3 * 120px + 2 * 24px gap + 2 * 32px padding */
+  /* Fixed dimensions to prevent resizing */
+  height: 400px;
+  width: 480px; /* 3 dice columns: 3 * 120px + 2 * 24px gap + 2 * 32px padding */
+  max-width: 100%;
+  overflow-y: auto;
 }
 
 @keyframes shake-rotate {
@@ -101,9 +103,10 @@
     font-size: 60px;
   }
 
-  /* Max width for mobile - 2 dice columns */
+  /* Fixed dimensions for mobile - 2 dice columns */
   .dice-container {
-    max-width: 288px; /* 2 * 100px + 1 * 24px gap + 2 * 32px padding */
-    min-height: 164px; /* 1 row: 100px dice + 2 * 32px padding */
+    width: 288px; /* 2 * 100px + 1 * 24px gap + 2 * 32px padding */
+    height: 350px;
+    max-width: 100%;
   }
 }
