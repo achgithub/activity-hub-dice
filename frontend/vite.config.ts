@@ -4,7 +4,11 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   base: '/api/apps/dice/proxy/',
+  server: {
+    port: 3026,
+  },
   build: {
-    outDir: 'build',
+    outDir: '../backend/static',
+    emptyOutDir: true,
   },
 })
