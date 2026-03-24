@@ -53,7 +53,7 @@ const DiceRoller: React.FC<DiceRollerProps> = ({ maxDice = 6 }) => {
 
   return (
     <div className="dice-app-container">
-      <GameCard size="narrow">
+      <GameCard>
         {/* Number of dice controls */}
         <div className="ah-flex-center-justify ah-mb">
           <button
