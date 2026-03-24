@@ -1,5 +1,14 @@
 /* Dice Board - Layout and animations */
 
+/* Fixed container for dice app - prevents jumping/resizing */
+.dice-app-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
 /* Dice container - white background like a board */
 .dice-container {
   display: flex;
@@ -11,9 +20,10 @@
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  /* Fixed height to prevent resizing - accommodates 2 rows of 3 dice */
+  min-height: 400px;
   /* Max width - 3 dice columns on desktop, but fits within container */
   max-width: 480px; /* 3 * 120px + 2 * 24px gap + 2 * 32px padding */
-  min-height: 184px; /* 1 row: 120px dice + 2 * 32px padding */
 }
 
 @keyframes shake-rotate {

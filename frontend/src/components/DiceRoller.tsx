@@ -52,64 +52,66 @@ const DiceRoller: React.FC<DiceRollerProps> = ({ maxDice = 6 }) => {
   const total = diceValues.reduce((a, b) => a + b, 0);
 
   return (
-    <GameCard size="narrow">
+    <div className="dice-app-container">
+      <GameCard size="narrow">
         {/* Number of dice controls */}
         <div className="ah-flex-center-justify ah-mb">
-        <button
-          className="ah-btn-outline"
-          onClick={removeDie}
-          disabled={numDice <= 1 || isRolling}
-        >
-          ▼
-        </button>
-        <span className="ah-badge">
-          {numDice} {numDice === 1 ? 'die' : 'dice'}
-        </span>
-        <button
-          className="ah-btn-outline"
-          onClick={addDie}
-          disabled={numDice >= maxDice || isRolling}
-        >
-          ▲
-        </button>
-      </div>
+          <button
+            className="ah-btn-outline"
+            onClick={removeDie}
+            disabled={numDice <= 1 || isRolling}
+          >
+            ▼
+          </button>
+          <span className="ah-badge">
+            {numDice} {numDice === 1 ? 'die' : 'dice'}
+          </span>
+          <button
+            className="ah-btn-outline"
+            onClick={addDie}
+            disabled={numDice >= maxDice || isRolling}
+          >
+            ▲
+          </button>
+        </div>
 
-      {/* Dice display */}
-      <div className="dice-container">
-        {diceValues.map((value, index) => (
-          <div key={index} className={`dice ${isRolling ? 'rolling' : ''}`}>
-            <img
-              src={`dice/dice-${value}.png`}
-              alt={`Dice showing ${value}`}
-              onError={(e) => {
-                // Fallback to emoji if image doesn't load
-                const target = e.target as HTMLImageElement;
-                target.style.display = 'none';
-                if (target.nextSibling) return;
-                const fallback = document.createElement('div');
-                fallback.className = 'dice-fallback';
-                fallback.textContent = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'][value - 1];
-                target.parentElement?.appendChild(fallback);
-              }}
-            />
-          </div>
-        ))}
-      </div>
+        {/* Dice display */}
+        <div className="dice-container">
+          {diceValues.map((value, index) => (
+            <div key={index} className={`dice ${isRolling ? 'rolling' : ''}`}>
+              <img
+                src={`dice/dice-${value}.png`}
+                alt={`Dice showing ${value}`}
+                onError={(e) => {
+                  // Fallback to emoji if image doesn't load
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                  if (target.nextSibling) return;
+                  const fallback = document.createElement('div');
+                  fallback.className = 'dice-fallback';
+                  fallback.textContent = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'][value - 1];
+                  target.parentElement?.appendChild(fallback);
+                }}
+              />
+            </div>
+          ))}
+        </div>
 
-      {/* Roll button */}
-      <button
-        className="ah-btn-primary ah-mb"
-        onClick={rollDice}
-        disabled={isRolling}
-      >
-        {isRolling ? 'Rolling...' : '🎲 Roll!'}
-      </button>
+        {/* Roll button */}
+        <button
+          className="ah-btn-primary ah-mb"
+          onClick={rollDice}
+          disabled={isRolling}
+        >
+          {isRolling ? 'Rolling...' : '🎲 Roll!'}
+        </button>
 
         {/* Total */}
         {!isRolling && (
           <h3>Total: {total}</h3>
         )}
       </GameCard>
+    </div>
   );
 };
 
